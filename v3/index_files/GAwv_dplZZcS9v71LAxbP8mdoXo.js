@@ -3611,7 +3611,9 @@ Ya.ready(function() {
     clear.className += ' mini-suggest__input-clear';
     button.className += ' mini-suggest__button';
     document.getElementsByTagName('TABLE')[0].className += ' yandex-search__layout-table';
+    var ys = document.querySelector('.yandex-search');
     MBEM.decl('mini-suggest', {
+
         _fixScrollTopFixed: function () {
             // scrollTo(0, 0) плохо работает в iOS
             if (window.pageYOffset > 0) {
@@ -3619,13 +3621,16 @@ Ya.ready(function() {
             }
         },
         _onFocus: function () {
+            ys.style.paddingTop = '';
+            this._fixScrollTopFixed();
             _this = this;
             _base = this.__base;
             _args = arguments;
 
-            _base.apply(_this, _args);
-            console.log('Я починен');
-            this._fixScrollTopFixed();
+            setTimeout(function(){
+                _base.apply(_this, _args);
+                console.log('Я починен');
+            }, 0);
         },
     });
     MBEM.initBlockFromNode(searchForm, 'mini-suggest', params);
